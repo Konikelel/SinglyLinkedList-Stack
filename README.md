@@ -93,6 +93,6 @@ void concatenate(SinglyLinkedList <Key, Info>& seq1, SinglyLinkedList <Key, Info
     seq2={}
 
 
-## Part 3 - Design a `Stack' class
+## Part 3 - Design a `Stack` class
 Design and implement a `Stack` class that internally uses the `SinglyLinkedList` class to store elements.
 The class should provide only stack operations. The internal implementation should be hidden (private). The `Stack` class should not inherit from the `SinglyLinkedList` class.
