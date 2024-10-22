@@ -1,6 +1,6 @@
 # Algorithm and Data Structure Task #1
 
-## Part 1 - Design a class
+## Part 1 - Design a `SinglyLinkedList` class
 
 Design a class `SinglyLinkedList` to represent collection  - singly linked list. Write unit tests for the designed class, at least one test per method.
 
@@ -93,6 +93,6 @@ void concatenate(SinglyLinkedList <Key, Info>& seq1, SinglyLinkedList <Key, Info
     seq2={}
 
 
-## Part 3 - Implement Stack class
+## Part 3 - Design a `Stack' class
 Design and implement a `Stack` class that internally uses the `SinglyLinkedList` class to store elements.
 The class should provide only stack operations. The internal implementation should be hidden (private). The `Stack` class should not inherit from the `SinglyLinkedList` class.
