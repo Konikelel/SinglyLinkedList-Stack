@@ -2,11 +2,11 @@
 
 
 
-void StackFixture::insertNodes(Stack<std::string, int> &stack, const unsigned int number, const int startNr)
+void StackFixture::insertNodes(Stack<std::string, int> &stack, const unsigned int number, const unsigned int startNr)
 {
-    for (int nr = startNr; nr < number + startNr; nr++)
+    for (unsigned int nr = startNr; nr < number + startNr; nr++)
     {
-        stack.push(std::to_string(nr), nr);
+        stack.push(std::to_string(nr), static_cast<int>(nr));
     }
 }
 

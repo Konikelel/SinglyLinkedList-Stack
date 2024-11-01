@@ -12,7 +12,7 @@ class StackFixture : public testing::Test {
 protected:
     Stack<std::string, int> stack;
 
-    static void insertNodes(Stack<std::string, int> &stack, unsigned int number, int startNr = 0);
+    static void insertNodes(Stack<std::string, int> &stack, unsigned int number, unsigned int startNr = 0);
 
     static Stack<std::string, int> createEmptyStack();
 };

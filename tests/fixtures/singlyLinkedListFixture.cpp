@@ -2,11 +2,11 @@
 
 
 
-void SinglyLikedListFixture::insertNodes(SinglyLinkedList<std::string, int> &list, const unsigned int number, const int startNr)
+void SinglyLikedListFixture::insertNodes(SinglyLinkedList<std::string, int> &list, const unsigned int number, const unsigned int startNr)
 {
-    for (int nr = startNr; nr < number + startNr; nr++)
+    for (unsigned int nr = startNr; nr < number + startNr; nr++)
     {
-        list.insertFront(std::to_string(nr), nr);
+        list.insertFront(std::to_string(nr), static_cast<int>(nr));
     }
 }
 

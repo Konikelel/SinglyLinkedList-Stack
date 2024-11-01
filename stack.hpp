@@ -12,8 +12,8 @@ public:
     void push(const Key& key, const Info& info);
     bool peek(Info& result);
     bool pop(Info& result);
-    bool isEmpty();
-    int size();
+    [[nodiscard]] bool isEmpty();
+    [[nodiscard]] unsigned int size();
 private:
     SinglyLinkedList<Key, Info> list;
 };
@@ -38,13 +38,13 @@ bool Stack<Key, Info>::pop(Info& result)
 }
 
 template <typename Key, typename Info>
-bool Stack<Key, Info>::isEmpty()
+[[nodiscard]] bool Stack<Key, Info>::isEmpty()
 {
     return list.isEmpty();
 }
 
 template <typename Key, typename Info>
-int Stack<Key, Info>::size()
+[[nodiscard]] unsigned int Stack<Key, Info>::size()
 {
     return list.size();
 }
