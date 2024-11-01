@@ -7,7 +7,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 file(GLOB_RECURSE TEST_SOURCES "*test*.cpp")
-set(TEST_PROJECT_SOURCES fixtures/singlyLinkedListFixture.hpp fixtures/singlyLinkedListFixture.cpp)
+set(TEST_PROJECT_SOURCES 
+        fixtures/singlyLinkedListFixture.hpp fixtures/singlyLinkedListFixture.cpp
+        fixtures/stackFixture.hpp fixtures/stackFixture.cpp
+)
 
 
 add_executable(testGoogle ${TEST_SOURCES} ${TEST_PROJECT_SOURCES})
