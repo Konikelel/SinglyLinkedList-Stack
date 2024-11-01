@@ -11,6 +11,7 @@ public:
     ~SinglyLinkedList();
     
     bool exist(const Key& key, unsigned int occ = 1) const;
+    int getPosition(const Key& key, unsigned int occ = 1) const;
     bool get(const Key& key, Info& result, unsigned int occ = 1) const;
     bool getFirst(Info& result) const;
     void insertFront(const Key& key, const Info& info);
@@ -18,7 +19,7 @@ public:
     // void insertEnd(const Key& key, const Info& info); //MAYBE ADD POINTER TO END NODE, RATHER NOT EFFICIENT
     // bool insertBefore(const Key& key, const Info& info, const Key& where, unsigned int occ = 1); NOT EFFICIENT
     bool removeFront();
-    void remove(const Key& key);
+    void removeAll(const Key& key);
     bool remove(const Key& key, unsigned int occ = 1);
     [[nodiscard]] unsigned int size() const;
     [[nodiscard]] bool isEmpty() const;
@@ -49,7 +50,10 @@ private:
      */
     Node* getNode(const Key& key, Node*& pPrevNode, unsigned int occ = 1) const;
     Node* getNode(const Key& key, unsigned int occ = 1) const;
-    bool remove(Node*& pTarget);
+    bool removeNode(Node*& pTarget);
+
+    template <typename K, typename I>
+    friend void concatenate(SinglyLinkedList<K, I>& seq1, SinglyLinkedList<K, I>& seq2, unsigned int len1, unsigned int len2, SinglyLinkedList<K, I>& seq);
 };
 
 
@@ -71,6 +75,20 @@ template <typename Key, typename Info>
 bool SinglyLinkedList<Key, Info>::exist(const Key& key, const unsigned int occ) const
 {
     return this->getNode(key, occ) != nullptr;
+}
+
+template <typename Key, typename Info>
+int SinglyLinkedList<Key, Info>::getPosition(const Key& key, unsigned int occ) const
+{
+    int pos = 0;
+    for (Node *pCurr = this->head; pCurr != nullptr; pCurr = pCurr->next, ++pos)
+    {
+        if (pCurr->key == key and --occ == 0)
+        {
+            return pos;
+        }
+    }
+    return -1;
 }
 
 template <typename Key, typename Info>
@@ -128,14 +146,16 @@ bool SinglyLinkedList<Key, Info>::removeFront()
 }
 
 template <typename Key, typename Info>
-void SinglyLinkedList<Key, Info>::remove(const Key& key)
+void SinglyLinkedList<Key, Info>::removeAll(const Key& key)
 {
-    for(Node *pPrev = nullptr, *pCurr = this->head; pCurr != nullptr; pPrev = pCurr, pCurr = pCurr->next)
+    for(Node *pPrev = nullptr, *pCurr = this->head; pCurr != nullptr; pCurr = pPrev == nullptr ? this->head : pPrev->next)
     {
         if (pCurr->key == key)
         {
-            this->remove(pPrev == nullptr ? this->head : pPrev->next);
+            this->removeNode(pPrev == nullptr ? this->head : pPrev->next);
+            continue;
         }
+        pPrev = pCurr;
     }
 }
 
@@ -149,7 +169,7 @@ bool SinglyLinkedList<Key, Info>::remove(const Key& key, const unsigned int occ)
         return false;
     }
     
-    return this->remove(pPrev == nullptr ? this->head : pPrev->next);
+    return this->removeNode(pPrev == nullptr ? this->head : pPrev->next);
 }
 
 template <typename Key, typename Info>
@@ -212,7 +232,7 @@ typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::getNode
 {
     for (Node *pPrev = nullptr, *pCurr = this->head; pCurr != nullptr; pPrev = pCurr, pCurr = pCurr->next)
     {
-        if (pCurr->key == key && --occ == 0)
+        if (pCurr->key == key and --occ == 0)
         {
             return pPrevNode = pPrev, pCurr;
         }
@@ -228,7 +248,7 @@ typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::getNode
 }
 
 template <typename Key, typename Info>
-bool SinglyLinkedList<Key, Info>::remove(Node*& pTarget)
+bool SinglyLinkedList<Key, Info>::removeNode(Node*& pTarget)
 {
     if (pTarget == nullptr)
     {

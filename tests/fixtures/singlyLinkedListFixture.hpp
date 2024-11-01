@@ -13,7 +13,7 @@ class SinglyLikedListFixture : public testing::Test
 protected:
     SinglyLinkedList<std::string, int> singlyList;
 
-    static void insertNodes(SinglyLinkedList<std::string, int> &list, unsigned int number);
+    static void insertNodes(SinglyLinkedList<std::string, int> &list, unsigned int number, const int startNr = 0);
 
     static SinglyLinkedList<std::string, int> createEmptyList();
 };

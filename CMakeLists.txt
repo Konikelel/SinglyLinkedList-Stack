@@ -4,7 +4,7 @@ project(stack VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(PROJECT_SOURCES singlyLinkedList.hpp)
+set(PROJECT_SOURCES singlyLinkedList.hpp concatenate.hpp)
 add_library(ProjectSourcesLib STATIC ${PROJECT_SOURCES})
 set_target_properties(ProjectSourcesLib PROPERTIES LINKER_LANGUAGE CXX)
 

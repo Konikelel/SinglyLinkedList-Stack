@@ -55,6 +55,27 @@ TEST_F(SinglyLikedListFixture, Exist_OneElementList)
 }
 
 
+// GET POSITION
+TEST_F(SinglyLikedListFixture, GetPosition_Empty)
+{
+    ASSERT_EQ(singlyList.getPosition("1"), -1);
+}
+
+TEST_F(SinglyLikedListFixture, GetPosition_Exists)
+{
+    insertNodes(singlyList, 2);
+    ASSERT_EQ(singlyList.getPosition("1"), 0);
+    ASSERT_EQ(singlyList.getPosition("0"), 1);
+}
+
+TEST_F(SinglyLikedListFixture, GetPosition_NotExists)
+{
+    insertNodes(singlyList, 2);
+    ASSERT_EQ(singlyList.getPosition("1"), 0);
+    ASSERT_EQ(singlyList.getPosition("3"), -1);
+}
+
+
 // GET
 TEST_F(SinglyLikedListFixture, Get_Empty)
 {
