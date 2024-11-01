@@ -19,8 +19,8 @@ TEST_F(SinglyLikedListFixture, CopyConstructor_Empty)
 
 TEST_F(SinglyLikedListFixture, CopyConstructor_OneElementList)
 {
-    singlyList.insertFront("1", 1);
-    auto copiedList = SinglyLinkedList(singlyList);
+    insertNodes(singlyList, 1);
+    const auto copiedList = SinglyLinkedList(singlyList);
 
     int toCheckOne, toCheckTwo;
     ASSERT_EQ(singlyList.size(), copiedList.size());
@@ -31,7 +31,7 @@ TEST_F(SinglyLikedListFixture, CopyConstructor_OneElementList)
 TEST_F(SinglyLikedListFixture, Exist_MultipleElementsList)
 {
     insertNodes(singlyList, 10);
-    auto copiedList = SinglyLinkedList(singlyList);
+    const auto copiedList = SinglyLinkedList(singlyList);
 
     int toCheckOne, toCheckTwo;
     ASSERT_EQ(singlyList.size(), copiedList.size());
@@ -310,7 +310,7 @@ TEST_F(SinglyLikedListFixture, Clear_NotEmpty)
 // EXTEND
 TEST_F(SinglyLikedListFixture, Extend_EmptyListWithEmptyList)
 {
-    auto toExtend = createEmptyList();
+    const auto toExtend = createEmptyList();
     singlyList.extend(toExtend);
     ASSERT_TRUE(singlyList.isEmpty());
 }
@@ -346,4 +346,95 @@ TEST_F(SinglyLikedListFixture, Extend_NotEmptyListWithNotEmptyList)
 
     singlyList.extend(toExtend);
     ASSERT_EQ(singlyList.size(), 9);
+}
+
+
+// OPERATOR =
+TEST_F(SinglyLikedListFixture, AssignmentOperator_SameList)
+{
+    insertNodes(singlyList, 5);
+    
+    singlyList = singlyList;  // NOLINT
+    ASSERT_EQ(singlyList.size(), 5);
+}
+
+TEST_F(SinglyLikedListFixture, AssignmentOperator_DiffrentListEmpty)
+{
+    insertNodes(singlyList, 5);
+    const auto toCheck = createEmptyList();
+    
+    singlyList = toCheck;
+    ASSERT_EQ(singlyList.size(), 0);
+}
+
+TEST_F(SinglyLikedListFixture, AssignmentOperator_DiffrentListNotEmpty)
+{
+    insertNodes(singlyList, 5);
+    auto toCheck = createEmptyList();
+    insertNodes(toCheck, 3);
+
+    singlyList = toCheck;
+    int toCheckOne, toCheckTwo;
+    ASSERT_EQ(singlyList.size(), 3);
+    ASSERT_EQ(singlyList.getFirst(toCheckOne), toCheck.getFirst(toCheckTwo));
+    ASSERT_EQ(toCheckOne, toCheckTwo);
+}
+
+
+// OPERATOR +
+TEST_F(SinglyLikedListFixture, AdditionOperator_SameList)
+{
+    insertNodes(singlyList, 5);
+
+    const auto toCheck = singlyList + singlyList;
+    ASSERT_EQ(toCheck.size(), 5 * 2);
+}
+
+TEST_F(SinglyLikedListFixture, AdditionOperator_DiffrentListEmpty)
+{
+    insertNodes(singlyList, 5);
+    const auto singlyListOther = createEmptyList();
+    
+    const auto toCheck = singlyList + singlyListOther;
+    ASSERT_EQ(toCheck.size(), 5);
+    
+}
+
+TEST_F(SinglyLikedListFixture, AdditionOperator_DiffrentListNotEmpty)
+{
+    insertNodes(singlyList, 5);
+    auto singlyListOther = createEmptyList();
+    insertNodes(singlyListOther, 3);
+
+    const auto toCheck = singlyList + singlyListOther;
+    ASSERT_EQ(toCheck.size(), 5 + 3);
+}
+
+
+// OPERATOR +=
+TEST_F(SinglyLikedListFixture, AdditionAssignmentOperator_SameList)
+{
+    insertNodes(singlyList, 5);
+
+    singlyList += singlyList;
+    ASSERT_EQ(singlyList.size(), 5);
+}
+
+TEST_F(SinglyLikedListFixture, AdditionAssignmentOperator_DiffrentListEmpty)
+{
+    insertNodes(singlyList, 5);
+    const auto singlyListOther = createEmptyList();
+    
+    singlyList += singlyListOther;
+    ASSERT_EQ(singlyList.size(), 5);
+}
+
+TEST_F(SinglyLikedListFixture, AdditionAssignmentOperator_DiffrentListNotEmpty)
+{
+    insertNodes(singlyList, 5);
+    auto singlyListOther = createEmptyList();
+    insertNodes(singlyListOther, 3);
+
+    singlyList += singlyListOther;
+    ASSERT_EQ(singlyList.size(), 5 + 3);
 }

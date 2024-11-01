@@ -10,9 +10,9 @@ public:
     SinglyLinkedList(const SinglyLinkedList& src);
     ~SinglyLinkedList();
     
-    bool exist(const Key& key, unsigned int occ = 1);
-    bool get(const Key& key, Info& result, unsigned int occ = 1);
-    bool getFirst(Info& result);
+    bool exist(const Key& key, unsigned int occ = 1) const;
+    bool get(const Key& key, Info& result, unsigned int occ = 1) const;
+    bool getFirst(Info& result) const;
     void insertFront(const Key& key, const Info& info);
     bool insertAfter(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
     // void insertEnd(const Key& key, const Info& info); //MAYBE ADD POINTER TO END NODE, RATHER NOT EFFICIENT
@@ -29,8 +29,8 @@ public:
     
     SinglyLinkedList& operator=(const SinglyLinkedList& other);
     SinglyLinkedList operator+(const SinglyLinkedList& other);
-    SinglyLinkedList& operator+=(const SinglyLinkedList& other); 
-    
+    SinglyLinkedList& operator+=(const SinglyLinkedList& other);
+
 private:
     struct Node
     {
@@ -47,30 +47,17 @@ private:
      * If found return pointer to element and override pPrevNode with pointer to previous element
      * If not found return nullptr
      */
-    Node* get(const Key& key, Node*& pPrevNode, unsigned int occ = 1);
-    Node* get(const Key& key, unsigned int occ = 1);
+    Node* getNode(const Key& key, Node*& pPrevNode, unsigned int occ = 1) const;
+    Node* getNode(const Key& key, unsigned int occ = 1) const;
     bool remove(Node*& pTarget);
 };
 
 
 
 template <typename Key, typename Info>
-SinglyLinkedList<Key, Info>::SinglyLinkedList(const SinglyLinkedList& src)
+SinglyLinkedList<Key, Info>::SinglyLinkedList(const SinglyLinkedList& src): SinglyLinkedList()
 {
-    Node *pPrev = nullptr;
-    for (Node *pCurr = src.head; pCurr != nullptr; pCurr = pCurr->next)
-    {
-        if (pPrev == nullptr)
-        {
-            this->head = new Node{pCurr->key, pCurr->info};
-            pPrev = this->head;
-        }
-        else
-        {
-            pPrev->next = new Node{pCurr->key, pCurr->info};
-            pPrev = pPrev->next;
-        }
-    }
+    this->extend(src);
 }
 
 template <typename Key, typename Info>
@@ -81,15 +68,15 @@ SinglyLinkedList<Key, Info>::~SinglyLinkedList()
 
 
 template <typename Key, typename Info>
-bool SinglyLinkedList<Key, Info>::exist(const Key& key, const unsigned int occ)
+bool SinglyLinkedList<Key, Info>::exist(const Key& key, const unsigned int occ) const
 {
-    return this->get(key, occ) != nullptr;
+    return this->getNode(key, occ) != nullptr;
 }
 
 template <typename Key, typename Info>
-bool SinglyLinkedList<Key, Info>::get(const Key& key, Info& result, const unsigned int occ)
+bool SinglyLinkedList<Key, Info>::get(const Key& key, Info& result, const unsigned int occ) const
 {
-    Node *pNode = this->get(key, occ);
+    Node *pNode = this->getNode(key, occ);
     if (pNode == nullptr)
     {
         return false;
@@ -99,7 +86,7 @@ bool SinglyLinkedList<Key, Info>::get(const Key& key, Info& result, const unsign
 }
 
 template <typename Key, typename Info>
-bool SinglyLinkedList<Key, Info>::getFirst(Info& result)
+bool SinglyLinkedList<Key, Info>::getFirst(Info& result) const
 {
     if (this->isEmpty())
     {
@@ -118,7 +105,7 @@ void SinglyLinkedList<Key, Info>::insertFront(const Key& key, const Info& info)
 template <typename Key, typename Info>
 bool SinglyLinkedList<Key, Info>::insertAfter(const Key& key, const Info& info, const Key& where, const unsigned int occ)
 {
-    Node *pPrev = this->get(where, occ);
+    Node *pPrev = this->getNode(where, occ);
     if (pPrev == nullptr)
     {
         return false;
@@ -156,7 +143,7 @@ template <typename Key, typename Info>
 bool SinglyLinkedList<Key, Info>::remove(const Key& key, const unsigned int occ)
 {
     Node *pPrev = nullptr;
-    Node *pNode = this->get(key, pPrev, occ);
+    Node *pNode = this->getNode(key, pPrev, occ);
     if (pNode == nullptr)
     {
         return false;
@@ -194,7 +181,7 @@ void SinglyLinkedList<Key, Info>::clear()
 }
 
 template <typename Key, typename Info>
-void SinglyLinkedList<Key, Info>::extend(const SinglyLinkedList<Key, Info>& other)
+void SinglyLinkedList<Key, Info>::extend(const SinglyLinkedList& other)
 {
     if (other.isEmpty())
     {
@@ -220,9 +207,8 @@ void SinglyLinkedList<Key, Info>::extend(const SinglyLinkedList<Key, Info>& othe
     }
 }
 
-
 template <typename Key, typename Info>
-typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::get(const Key& key, Node*& pPrevNode, unsigned int occ)
+typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::getNode(const Key& key, Node*& pPrevNode, unsigned int occ) const
 {
     for (Node *pPrev = nullptr, *pCurr = this->head; pCurr != nullptr; pPrev = pCurr, pCurr = pCurr->next)
     {
@@ -235,10 +221,10 @@ typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::get(con
 }
 
 template <typename Key, typename Info>
-typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::get(const Key& key, const unsigned int occ)
+typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::getNode(const Key& key, const unsigned int occ) const
 {
     Node *pTemp;
-    return this->get(key, pTemp, occ);
+    return this->getNode(key, pTemp, occ);
 }
 
 template <typename Key, typename Info>
@@ -253,6 +239,35 @@ bool SinglyLinkedList<Key, Info>::remove(Node*& pTarget)
     pTarget = pTarget->next;
     delete toDelete;
     return true;
+}
+
+
+template <typename Key, typename Info>
+SinglyLinkedList<Key, Info>& SinglyLinkedList<Key, Info>::operator=(const SinglyLinkedList& other)
+{
+    if (this != &other)
+    {
+        this->clear();
+        this->extend(other);
+    }
+    return *this;
+}
+
+template <typename Key, typename Info>
+SinglyLinkedList<Key, Info> SinglyLinkedList<Key, Info>::operator+(const SinglyLinkedList& other)
+{
+    auto out = SinglyLinkedList(*this);
+    out.extend(other);
+    return out;
+}
+
+template <typename Key, typename Info>
+SinglyLinkedList<Key, Info>& SinglyLinkedList<Key, Info>::operator+=(const SinglyLinkedList& other)
+{
+    if (this != &other) {
+        this->extend(other);
+    }
+    return *this;
 }
 
 #endif //SINGLY_LINKED_LIST_H
