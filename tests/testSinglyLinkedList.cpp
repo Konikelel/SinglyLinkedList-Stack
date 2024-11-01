@@ -73,7 +73,9 @@ TEST_F(SinglyLikedListFixture, Get_OneElementList)
 
 TEST_F(SinglyLikedListFixture, Get_MultipleElementsList)
 {
-    insertNodes(singlyList, 10);
+    singlyList.insertFront("0", 0);
+    singlyList.insertFront("5", 5);
+    
     
     int toCheck;
     ASSERT_TRUE(singlyList.get("0", toCheck));
@@ -223,10 +225,27 @@ TEST_F(SinglyLikedListFixture, RemoveFront_MultipleElementsList)
 }
 
 
-// REMOVE
-// TODO: ADD TESTS FOR REMOVE
+// REMOVE ALL
+TEST_F(SinglyLikedListFixture, Remove_Empty)
+{
+    ASSERT_FALSE(singlyList.remove("1", 1));
+}
 
-// specific occurrence
+TEST_F(SinglyLikedListFixture, Remove_NotEmpty)
+{
+    singlyList.insertFront("1", 1);
+    singlyList.insertFront("2", 1);
+    singlyList.insertFront("1", 2);
+    singlyList.insertFront("2", 2);
+    singlyList.insertFront("1", 1);
+
+    singlyList.removeAll("1");
+    ASSERT_EQ(singlyList.size(), 2);
+    singlyList.removeAll("2");
+    ASSERT_TRUE(singlyList.isEmpty());
+}
+
+// REMOVE
 TEST_F(SinglyLikedListFixture, Remove_Occurance_Empty)
 {
     ASSERT_FALSE(singlyList.remove("1", 1));
