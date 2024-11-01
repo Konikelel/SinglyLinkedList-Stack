@@ -5,19 +5,19 @@
 
 
 // CONSTRUCTOR
-TEST_F(SinglyLikedListFixture, Constructor_InitializeEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_Constructor_InitializeEmpty)
 {
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
 // copy constructor
-TEST_F(SinglyLikedListFixture, CopyConstructor_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_CopyConstructor_Empty)
 {
     const auto toCheck = SinglyLinkedList(singlyList);
     ASSERT_TRUE(toCheck.isEmpty());
 }
 
-TEST_F(SinglyLikedListFixture, CopyConstructor_OneElementList)
+TEST_F(SinglyLikedListFixture, Singly_List_CopyConstructor_OneElementList)
 {
     insertNodes(singlyList, 1);
     const auto copiedList = SinglyLinkedList(singlyList);
@@ -28,7 +28,7 @@ TEST_F(SinglyLikedListFixture, CopyConstructor_OneElementList)
     ASSERT_EQ(toCheckOne, toCheckTwo);
 }
 
-TEST_F(SinglyLikedListFixture, Exist_MultipleElementsList)
+TEST_F(SinglyLikedListFixture, Singly_List_Exist_MultipleElementsList)
 {
     insertNodes(singlyList, 10);
     const auto copiedList = SinglyLinkedList(singlyList);
@@ -41,12 +41,12 @@ TEST_F(SinglyLikedListFixture, Exist_MultipleElementsList)
 
 
 // EXISTS
-TEST_F(SinglyLikedListFixture, Exist_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_Exist_Empty)
 {
     ASSERT_FALSE(singlyList.exist("1"));
 }
 
-TEST_F(SinglyLikedListFixture, Exist_OneElementList)
+TEST_F(SinglyLikedListFixture, Singly_List_Exist_OneElementList)
 {
     singlyList.insertFront("1", 1);
     
@@ -56,19 +56,19 @@ TEST_F(SinglyLikedListFixture, Exist_OneElementList)
 
 
 // GET POSITION
-TEST_F(SinglyLikedListFixture, GetPosition_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_GetPosition_Empty)
 {
     ASSERT_EQ(singlyList.getPosition("1"), -1);
 }
 
-TEST_F(SinglyLikedListFixture, GetPosition_Exists)
+TEST_F(SinglyLikedListFixture, Singly_List_GetPosition_Exists)
 {
     insertNodes(singlyList, 2);
     ASSERT_EQ(singlyList.getPosition("1"), 0);
     ASSERT_EQ(singlyList.getPosition("0"), 1);
 }
 
-TEST_F(SinglyLikedListFixture, GetPosition_NotExists)
+TEST_F(SinglyLikedListFixture, Singly_List_GetPosition_NotExists)
 {
     insertNodes(singlyList, 2);
     ASSERT_EQ(singlyList.getPosition("1"), 0);
@@ -77,13 +77,13 @@ TEST_F(SinglyLikedListFixture, GetPosition_NotExists)
 
 
 // GET
-TEST_F(SinglyLikedListFixture, Get_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_Get_Empty)
 {
     int temp;
     ASSERT_FALSE(singlyList.get("1", temp));
 }
 
-TEST_F(SinglyLikedListFixture, Get_OneElementList)
+TEST_F(SinglyLikedListFixture, Singly_List_Get_OneElementList)
 {
     singlyList.insertFront("1", 1);
     
@@ -92,7 +92,7 @@ TEST_F(SinglyLikedListFixture, Get_OneElementList)
     ASSERT_EQ(toCheck, 1);
 }
 
-TEST_F(SinglyLikedListFixture, Get_MultipleElementsList)
+TEST_F(SinglyLikedListFixture, Singly_List_Get_MultipleElementsList)
 {
     singlyList.insertFront("0", 0);
     singlyList.insertFront("5", 5);
@@ -107,7 +107,7 @@ TEST_F(SinglyLikedListFixture, Get_MultipleElementsList)
     ASSERT_EQ(toCheck, 5);
 }
 
-TEST_F(SinglyLikedListFixture, Get_SpecificOccurance)
+TEST_F(SinglyLikedListFixture, Singly_List_Get_SpecificOccurance)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("1", 2);
@@ -117,7 +117,7 @@ TEST_F(SinglyLikedListFixture, Get_SpecificOccurance)
     ASSERT_EQ(toCheck, 1);
 }
 
-TEST_F(SinglyLikedListFixture, Get_SpecificOccuranceNotExist)
+TEST_F(SinglyLikedListFixture, Singly_List_Get_SpecificOccuranceNotExist)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("1", 2);
@@ -128,13 +128,13 @@ TEST_F(SinglyLikedListFixture, Get_SpecificOccuranceNotExist)
 
 
 //GET FIRST
-TEST_F(SinglyLikedListFixture, GetFirst_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_GetFirst_Empty)
 {
     int temp;
     ASSERT_FALSE(singlyList.getFirst(temp));
 }
 
-TEST_F(SinglyLikedListFixture, GetFirst_OneElementList)
+TEST_F(SinglyLikedListFixture, Singly_List_GetFirst_OneElementList)
 {
     insertNodes(singlyList, 1);
     
@@ -143,7 +143,7 @@ TEST_F(SinglyLikedListFixture, GetFirst_OneElementList)
     ASSERT_EQ(toCheck, 0);
 }
 
-TEST_F(SinglyLikedListFixture, GetFirst_MultipleElementList)
+TEST_F(SinglyLikedListFixture, Singly_List_GetFirst_MultipleElementList)
 {
     insertNodes(singlyList, 4);
     
@@ -154,7 +154,7 @@ TEST_F(SinglyLikedListFixture, GetFirst_MultipleElementList)
 
 
 // INSERT FRONT
-TEST_F(SinglyLikedListFixture, InsertFront_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_InsertFront_Empty)
 {
     ASSERT_TRUE(singlyList.isEmpty());
     singlyList.insertFront("1", 1);
@@ -164,7 +164,7 @@ TEST_F(SinglyLikedListFixture, InsertFront_Empty)
     ASSERT_EQ(toCheck, 1);
 }
 
-TEST_F(SinglyLikedListFixture, InsertFront_NotEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_InsertFront_NotEmpty)
 {
     ASSERT_TRUE(singlyList.isEmpty());
     singlyList.insertFront("1", 1);
@@ -179,13 +179,13 @@ TEST_F(SinglyLikedListFixture, InsertFront_NotEmpty)
 
 
 // INSERT AFTER
-TEST_F(SinglyLikedListFixture, InsertAfter_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_InsertAfter_Empty)
 {
     ASSERT_FALSE(singlyList.insertAfter("1", 1, "2"));
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
-TEST_F(SinglyLikedListFixture, InsertAfter_FirstOccurance)
+TEST_F(SinglyLikedListFixture, Singly_List_InsertAfter_FirstOccurance)
 {
     singlyList.insertFront("1", 1);
     ASSERT_TRUE(singlyList.insertAfter("2", 2, "1"));
@@ -196,7 +196,7 @@ TEST_F(SinglyLikedListFixture, InsertAfter_FirstOccurance)
     ASSERT_TRUE(singlyList.exist("2"));
 }
 
-TEST_F(SinglyLikedListFixture, InsertAfter_SpecificOccurrence)
+TEST_F(SinglyLikedListFixture, Singly_List_InsertAfter_SpecificOccurrence)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("1", 1);
@@ -211,7 +211,7 @@ TEST_F(SinglyLikedListFixture, InsertAfter_SpecificOccurrence)
     ASSERT_EQ(toCheck, 2);
 }
 
-TEST_F(SinglyLikedListFixture, InsertAfter_SpecificOccurrenceNotExists)
+TEST_F(SinglyLikedListFixture, Singly_List_InsertAfter_SpecificOccurrenceNotExists)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("1", 1);
@@ -222,7 +222,7 @@ TEST_F(SinglyLikedListFixture, InsertAfter_SpecificOccurrenceNotExists)
 
 
 // REMOVE FRONT
-TEST_F(SinglyLikedListFixture, RemoveFront_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_RemoveFront_Empty)
 {
     ASSERT_FALSE(singlyList.removeFront());
 }
@@ -234,7 +234,7 @@ TEST_F(SinglyLikedListFixture, RemoveFront_OneElement)
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
-TEST_F(SinglyLikedListFixture, RemoveFront_MultipleElementsList)
+TEST_F(SinglyLikedListFixture, Singly_List_RemoveFront_MultipleElementsList)
 {
     insertNodes(singlyList, 5);
     ASSERT_TRUE(singlyList.removeFront());
@@ -247,12 +247,12 @@ TEST_F(SinglyLikedListFixture, RemoveFront_MultipleElementsList)
 
 
 // REMOVE ALL
-TEST_F(SinglyLikedListFixture, Remove_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_Remove_Empty)
 {
     ASSERT_FALSE(singlyList.remove("1", 1));
 }
 
-TEST_F(SinglyLikedListFixture, Remove_NotEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_Remove_NotEmpty)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("2", 1);
@@ -267,19 +267,19 @@ TEST_F(SinglyLikedListFixture, Remove_NotEmpty)
 }
 
 // REMOVE
-TEST_F(SinglyLikedListFixture, Remove_Occurance_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_Remove_Occurance_Empty)
 {
     ASSERT_FALSE(singlyList.remove("1", 1));
 }
 
-TEST_F(SinglyLikedListFixture, Remove_Occurance_OneElementList)
+TEST_F(SinglyLikedListFixture, Singly_List_Remove_Occurance_OneElementList)
 {
     singlyList.insertFront("1", 1);
     ASSERT_TRUE(singlyList.remove("1", 1));
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
-TEST_F(SinglyLikedListFixture, Remove_Occurance_MultipleElementsList)
+TEST_F(SinglyLikedListFixture, Singly_List_Remove_Occurance_MultipleElementsList)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("1", 2);
@@ -290,7 +290,7 @@ TEST_F(SinglyLikedListFixture, Remove_Occurance_MultipleElementsList)
     ASSERT_EQ(toCheck, 2);
 }
 
-TEST_F(SinglyLikedListFixture, Remove_Occurance_MultipleElementsListNotExists)
+TEST_F(SinglyLikedListFixture, Singly_List_Remove_Occurance_MultipleElementsListNotExists)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("1", 2);
@@ -301,18 +301,18 @@ TEST_F(SinglyLikedListFixture, Remove_Occurance_MultipleElementsListNotExists)
 
 
 // SIZE
-TEST_F(SinglyLikedListFixture, Size_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_Size_Empty)
 {
     ASSERT_EQ(singlyList.size(), 0);
 }
 
-TEST_F(SinglyLikedListFixture, Size_OneElementList)
+TEST_F(SinglyLikedListFixture, Singly_List_Size_OneElementList)
 {
     singlyList.insertFront("1", 1);
     ASSERT_EQ(singlyList.size(), 1);
 }
 
-TEST_F(SinglyLikedListFixture, Size_MultipleElementsList)
+TEST_F(SinglyLikedListFixture, Singly_List_Size_MultipleElementsList)
 {
     insertNodes(singlyList, 5);
     ASSERT_EQ(singlyList.size(), 5);
@@ -320,12 +320,12 @@ TEST_F(SinglyLikedListFixture, Size_MultipleElementsList)
 
 
 // IS EMPTY
-TEST_F(SinglyLikedListFixture, IsEmpty_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_IsEmpty_Empty)
 {
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
-TEST_F(SinglyLikedListFixture, IsEmpty_NotEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_IsEmpty_NotEmpty)
 {
     singlyList.insertFront("1", 1);
     ASSERT_FALSE(singlyList.isEmpty());
@@ -333,13 +333,13 @@ TEST_F(SinglyLikedListFixture, IsEmpty_NotEmpty)
 
 
 // CLEAR
-TEST_F(SinglyLikedListFixture, Clear_Empty)
+TEST_F(SinglyLikedListFixture, Singly_List_Clear_Empty)
 {
     singlyList.clear();
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
-TEST_F(SinglyLikedListFixture, Clear_NotEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_Clear_NotEmpty)
 {
     singlyList.insertFront("1", 1);
     singlyList.clear();
@@ -348,14 +348,14 @@ TEST_F(SinglyLikedListFixture, Clear_NotEmpty)
 
 
 // EXTEND
-TEST_F(SinglyLikedListFixture, Extend_EmptyListWithEmptyList)
+TEST_F(SinglyLikedListFixture, Singly_List_Extend_EmptyListWithEmptyList)
 {
     const auto toExtend = createEmptyList();
     singlyList.extend(toExtend);
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
-TEST_F(SinglyLikedListFixture, Extend_EmptyListWithNoEmptyList)
+TEST_F(SinglyLikedListFixture, Singly_List_Extend_EmptyListWithNoEmptyList)
 {
     auto toExtend = createEmptyList();
     insertNodes(toExtend, 5);
@@ -369,7 +369,7 @@ TEST_F(SinglyLikedListFixture, Extend_EmptyListWithNoEmptyList)
     ASSERT_EQ(toCheckOne, toCheckTwo);
 }
 
-TEST_F(SinglyLikedListFixture, Extend_NotEmptyListWithEmptyList)
+TEST_F(SinglyLikedListFixture, Singly_List_Extend_NotEmptyListWithEmptyList)
 {
     insertNodes(singlyList, 5);
     const auto toExtend = createEmptyList();
@@ -378,7 +378,7 @@ TEST_F(SinglyLikedListFixture, Extend_NotEmptyListWithEmptyList)
     ASSERT_EQ(singlyList.size(), 5);
 }
 
-TEST_F(SinglyLikedListFixture, Extend_NotEmptyListWithNotEmptyList)
+TEST_F(SinglyLikedListFixture, Singly_List_Extend_NotEmptyListWithNotEmptyList)
 {
     insertNodes(singlyList, 5);
     auto toExtend = createEmptyList();
@@ -390,7 +390,7 @@ TEST_F(SinglyLikedListFixture, Extend_NotEmptyListWithNotEmptyList)
 
 
 // OPERATOR =
-TEST_F(SinglyLikedListFixture, AssignmentOperator_SameList)
+TEST_F(SinglyLikedListFixture, Singly_List_AssignmentOperator_SameList)
 {
     insertNodes(singlyList, 5);
     
@@ -398,7 +398,7 @@ TEST_F(SinglyLikedListFixture, AssignmentOperator_SameList)
     ASSERT_EQ(singlyList.size(), 5);
 }
 
-TEST_F(SinglyLikedListFixture, AssignmentOperator_DiffrentListEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_AssignmentOperator_DiffrentListEmpty)
 {
     insertNodes(singlyList, 5);
     const auto toCheck = createEmptyList();
@@ -407,7 +407,7 @@ TEST_F(SinglyLikedListFixture, AssignmentOperator_DiffrentListEmpty)
     ASSERT_EQ(singlyList.size(), 0);
 }
 
-TEST_F(SinglyLikedListFixture, AssignmentOperator_DiffrentListNotEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_AssignmentOperator_DiffrentListNotEmpty)
 {
     insertNodes(singlyList, 5);
     auto toCheck = createEmptyList();
@@ -422,7 +422,7 @@ TEST_F(SinglyLikedListFixture, AssignmentOperator_DiffrentListNotEmpty)
 
 
 // OPERATOR +
-TEST_F(SinglyLikedListFixture, AdditionOperator_SameList)
+TEST_F(SinglyLikedListFixture, Singly_List_AdditionOperator_SameList)
 {
     insertNodes(singlyList, 5);
 
@@ -430,7 +430,7 @@ TEST_F(SinglyLikedListFixture, AdditionOperator_SameList)
     ASSERT_EQ(toCheck.size(), 5 * 2);
 }
 
-TEST_F(SinglyLikedListFixture, AdditionOperator_DiffrentListEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_AdditionOperator_DiffrentListEmpty)
 {
     insertNodes(singlyList, 5);
     const auto singlyListOther = createEmptyList();
@@ -440,7 +440,7 @@ TEST_F(SinglyLikedListFixture, AdditionOperator_DiffrentListEmpty)
     
 }
 
-TEST_F(SinglyLikedListFixture, AdditionOperator_DiffrentListNotEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_AdditionOperator_DiffrentListNotEmpty)
 {
     insertNodes(singlyList, 5);
     auto singlyListOther = createEmptyList();
@@ -452,7 +452,7 @@ TEST_F(SinglyLikedListFixture, AdditionOperator_DiffrentListNotEmpty)
 
 
 // OPERATOR +=
-TEST_F(SinglyLikedListFixture, AdditionAssignmentOperator_SameList)
+TEST_F(SinglyLikedListFixture, Singly_List_AdditionAssignmentOperator_SameList)
 {
     insertNodes(singlyList, 5);
 
@@ -460,7 +460,7 @@ TEST_F(SinglyLikedListFixture, AdditionAssignmentOperator_SameList)
     ASSERT_EQ(singlyList.size(), 5);
 }
 
-TEST_F(SinglyLikedListFixture, AdditionAssignmentOperator_DiffrentListEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_AdditionAssignmentOperator_DiffrentListEmpty)
 {
     insertNodes(singlyList, 5);
     const auto singlyListOther = createEmptyList();
@@ -469,7 +469,7 @@ TEST_F(SinglyLikedListFixture, AdditionAssignmentOperator_DiffrentListEmpty)
     ASSERT_EQ(singlyList.size(), 5);
 }
 
-TEST_F(SinglyLikedListFixture, AdditionAssignmentOperator_DiffrentListNotEmpty)
+TEST_F(SinglyLikedListFixture, Singly_List_AdditionAssignmentOperator_DiffrentListNotEmpty)
 {
     insertNodes(singlyList, 5);
     auto singlyListOther = createEmptyList();
