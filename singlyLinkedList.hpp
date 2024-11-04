@@ -16,15 +16,12 @@ public:
     bool getFirst(Info& result) const;
     bool insertFront(const Key& key, const Info& info);
     bool insertAfter(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
-    bool insertBefore(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
     bool removeFront();
     void removeAll(const Key& key);
     bool remove(const Key& key, unsigned int occ = 1);
     [[nodiscard]] unsigned int size() const;
     [[nodiscard]] bool isEmpty() const;
     void clear();
-    // void reverse();
-    // void swap(SinglyLinkedList& other);
     void extend(const SinglyLinkedList& other);
     
     SinglyLinkedList& operator=(const SinglyLinkedList& other);
