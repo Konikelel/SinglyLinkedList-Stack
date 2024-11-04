@@ -6,7 +6,7 @@ template <typename Key, typename Info>
 class SinglyLinkedList
 {
 public:
-    SinglyLinkedList() : head(nullptr) {}
+    SinglyLinkedList() : head(nullptr), count(0) {}
     SinglyLinkedList(const SinglyLinkedList& src);
     ~SinglyLinkedList();
     
@@ -14,10 +14,9 @@ public:
     int getPosition(const Key& key, unsigned int occ = 1) const;
     bool get(const Key& key, Info& result, unsigned int occ = 1) const;
     bool getFirst(Info& result) const;
-    void insertFront(const Key& key, const Info& info);
+    bool insertFront(const Key& key, const Info& info);
     bool insertAfter(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
-    // void insertEnd(const Key& key, const Info& info); //MAYBE ADD POINTER TO END NODE, RATHER NOT EFFICIENT
-    // bool insertBefore(const Key& key, const Info& info, const Key& where, unsigned int occ = 1); NOT EFFICIENT
+    bool insertBefore(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
     bool removeFront();
     void removeAll(const Key& key);
     bool remove(const Key& key, unsigned int occ = 1);
@@ -42,6 +41,7 @@ private:
         Node(const Key& key, const Info& info, Node *next = nullptr) : key(key), info(info), next(next) {}
     };
     Node *head;
+    unsigned int count;
 
     /*
      * Get node with key of n-th occurrence
@@ -50,7 +50,9 @@ private:
      */
     Node* getNode(const Key& key, Node*& pPrevNode, unsigned int occ = 1) const;
     Node* getNode(const Key& key, unsigned int occ = 1) const;
+    // To have everything in one place: setting count, memory allocation, etc.
     bool removeNode(Node*& pTarget);
+    bool insertNode(Node*& pTarget, const Key& key, const Info& info);
 
     template <typename K, typename I>
     friend void concatenate(SinglyLinkedList<K, I>& seq1, SinglyLinkedList<K, I>& seq2, unsigned int len1, unsigned int len2, SinglyLinkedList<K, I>& seq);
@@ -115,9 +117,9 @@ bool SinglyLinkedList<Key, Info>::getFirst(Info& result) const
 }
 
 template <typename Key, typename Info>
-void SinglyLinkedList<Key, Info>::insertFront(const Key& key, const Info& info)
+bool SinglyLinkedList<Key, Info>::insertFront(const Key& key, const Info& info)
 {
-    this->head = new Node{key, info, this->head};
+    return this->insertNode(this->head, key, info);
 }
 
 template <typename Key, typename Info>
@@ -128,21 +130,13 @@ bool SinglyLinkedList<Key, Info>::insertAfter(const Key& key, const Info& info, 
     {
         return false;
     }
-    pPrev->next = new Node{key, info, pPrev->next};
-    return true;
+    return this->insertNode(pPrev->next, key, info);
 }
 
 template <typename Key, typename Info>
 bool SinglyLinkedList<Key, Info>::removeFront()
 {
-    if (this->isEmpty())
-    {
-        return false;
-    }
-    const Node *pDelete = head;
-    head = head->next;
-    delete pDelete;
-    return true;
+    return this->removeNode(this->head);
 }
 
 template <typename Key, typename Info>
@@ -175,18 +169,13 @@ bool SinglyLinkedList<Key, Info>::remove(const Key& key, const unsigned int occ)
 template <typename Key, typename Info>
 [[nodiscard]] unsigned int SinglyLinkedList<Key, Info>::size() const
 {
-    unsigned int size = 0;
-    for (Node *pCurr = this->head; pCurr != nullptr; pCurr = pCurr->next)
-    {
-        ++size;
-    }
-    return size;
+    return this->count;
 }
 
 template <typename Key, typename Info>
 [[nodiscard]] bool SinglyLinkedList<Key, Info>::isEmpty() const
 {
-    return this->head == nullptr;
+    return !this->size();
 }
 
 template <typename Key, typename Info>
@@ -198,6 +187,7 @@ void SinglyLinkedList<Key, Info>::clear()
         this->head = this->head->next;
         delete pCurr;
     }
+    this->count = 0;
 }
 
 template <typename Key, typename Info>
@@ -211,8 +201,8 @@ void SinglyLinkedList<Key, Info>::extend(const SinglyLinkedList& other)
     Node *pThisCurr = this->head, *pOtherCurr = other.head;
     if (this->isEmpty())
     {
-        this->head = pThisCurr = new Node{pOtherCurr->key, pOtherCurr->info};
-        pOtherCurr = pOtherCurr->next;
+        this->insertNode(this->head, pOtherCurr->key, pOtherCurr->info);
+        pOtherCurr = pOtherCurr->next, pThisCurr = this->head;
     }
     else
     {
@@ -223,7 +213,7 @@ void SinglyLinkedList<Key, Info>::extend(const SinglyLinkedList& other)
     }
     for (;pOtherCurr != nullptr; pOtherCurr = pOtherCurr->next, pThisCurr = pThisCurr->next)
     {
-        pThisCurr->next = new Node{pOtherCurr->key, pOtherCurr->info};
+        this->insertNode(pThisCurr->next, pOtherCurr->key, pOtherCurr->info);
     }
 }
 
@@ -258,6 +248,15 @@ bool SinglyLinkedList<Key, Info>::removeNode(Node*& pTarget)
     const Node *toDelete = pTarget;
     pTarget = pTarget->next;
     delete toDelete;
+    --this->count;
+    return true;
+}
+
+template <typename Key, typename Info>
+bool SinglyLinkedList<Key, Info>::insertNode(Node*& pTarget, const Key& key, const Info& info)
+{
+    pTarget = new Node{key, info, pTarget};
+    ++this->count;
     return true;
 }
 
