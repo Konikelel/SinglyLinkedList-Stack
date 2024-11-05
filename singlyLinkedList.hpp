@@ -38,7 +38,7 @@ private:
         Node(const Key& key, const Info& info, Node *next = nullptr) : key(key), info(info), next(next) {}
     };
     Node *head;
-    unsigned int count;
+    unsigned int count; // To optimize function size()
 
     /*
      * Get node with key of n-th occurrence
@@ -51,6 +51,8 @@ private:
     bool removeNode(Node*& pTarget);
     bool insertNode(Node*& pTarget, const Key& key, const Info& info);
 
+    template <typename K, typename I>
+    friend std::ostream& operator<<(std::ostream& os, const SinglyLinkedList<K, I>& list);
     template <typename K, typename I>
     friend void concatenate(SinglyLinkedList<K, I>& seq1, SinglyLinkedList<K, I>& seq2, unsigned int len1, unsigned int len2, SinglyLinkedList<K, I>& seq);
 };
@@ -172,14 +174,13 @@ template <typename Key, typename Info>
 template <typename Key, typename Info>
 [[nodiscard]] bool SinglyLinkedList<Key, Info>::isEmpty() const
 {
-    return !this->size();
+    return !this->count;
 }
 
 template <typename Key, typename Info>
 void SinglyLinkedList<Key, Info>::clear()
 {
-    Node *pCurr;
-    while ((pCurr = this->head) != nullptr)
+    for (Node *pCurr; (pCurr = this->head) != nullptr;)
     {
         this->head = this->head->next;
         delete pCurr;
@@ -230,7 +231,7 @@ typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::getNode
 template <typename Key, typename Info>
 typename SinglyLinkedList<Key, Info>::Node* SinglyLinkedList<Key, Info>::getNode(const Key& key, const unsigned int occ) const
 {
-    Node *pTemp;
+    Node *pTemp; // To avoid duplicating of code, encapsulation keeping original function consistent
     return this->getNode(key, pTemp, occ);
 }
 
@@ -252,9 +253,16 @@ bool SinglyLinkedList<Key, Info>::removeNode(Node*& pTarget)
 template <typename Key, typename Info>
 bool SinglyLinkedList<Key, Info>::insertNode(Node*& pTarget, const Key& key, const Info& info)
 {
-    pTarget = new Node{key, info, pTarget};
-    ++this->count;
-    return true;
+    try
+    {
+        pTarget = new Node{key, info, pTarget};
+        ++this->count;
+        return true;
+    }
+    catch (std::bad_alloc&)
+    {
+        throw std::runtime_error("Couldn't allocate memory for the Node");
+    }
 }
 
 
@@ -284,6 +292,16 @@ SinglyLinkedList<Key, Info>& SinglyLinkedList<Key, Info>::operator+=(const Singl
         this->extend(other);
     }
     return *this;
+}
+
+template <typename Key, typename Info>
+std::ostream& operator<<(std::ostream& os, const SinglyLinkedList<Key, Info>& list)
+{
+    for (typename SinglyLinkedList<Key, Info>::Node *pCurr = list.head; pCurr != nullptr; pCurr = pCurr->next)
+    {
+        os << pCurr->key << " " << pCurr->info << std::endl;
+    }
+    return os;  
 }
 
 #endif //SINGLY_LINKED_LIST_H

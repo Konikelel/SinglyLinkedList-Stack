@@ -8,7 +8,7 @@
 #include "singlyLinkedList.hpp"
 
 
-class SinglyLikedListFixture : public testing::Test
+class SinglyLinkedListFixture : public testing::Test
 {
 protected:
     SinglyLinkedList<std::string, int> singlyList;

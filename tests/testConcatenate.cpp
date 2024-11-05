@@ -5,7 +5,7 @@
 #include "singlyLinkedListFixture.hpp"
 
 
-TEST_F(SinglyLikedListFixture, Concatenate_NotEmpty)
+TEST_F(SinglyLinkedListFixture, Concatenate_NotEmpty)
 {
     auto singlyList2 = createEmptyList();
     auto toCheck = createEmptyList();
@@ -22,7 +22,7 @@ TEST_F(SinglyLikedListFixture, Concatenate_NotEmpty)
     ASSERT_EQ(toCheck.getPosition("0"), 19);
 }
 
-TEST_F(SinglyLikedListFixture, Concatenate_OneLenZero)
+TEST_F(SinglyLinkedListFixture, Concatenate_OneLenZero)
 {
     auto singlyList2 = createEmptyList();
     auto toCheck = createEmptyList();
@@ -38,7 +38,7 @@ TEST_F(SinglyLikedListFixture, Concatenate_OneLenZero)
     ASSERT_EQ(toCheck.getPosition("4"), 1);
 }
 
-TEST_F(SinglyLikedListFixture, Concatenate_LenGreaterThanSizeList)
+TEST_F(SinglyLinkedListFixture, Concatenate_LenGreaterThanSizeList)
 {
     auto singlyList2 = createEmptyList();
     auto toCheck = createEmptyList();
@@ -54,7 +54,7 @@ TEST_F(SinglyLikedListFixture, Concatenate_LenGreaterThanSizeList)
     ASSERT_EQ(toCheck.getPosition("4"), 1);
 }
 
-TEST_F(SinglyLikedListFixture, Concatenate_TwoLenZero)
+TEST_F(SinglyLinkedListFixture, Concatenate_TwoLenZero)
 {
     auto singlyList2 = createEmptyList();
     auto toCheck = createEmptyList();

@@ -2,7 +2,7 @@
 
 
 
-void SinglyLikedListFixture::insertNodes(SinglyLinkedList<std::string, int> &list, const unsigned int number, const unsigned int startNr)
+void SinglyLinkedListFixture::insertNodes(SinglyLinkedList<std::string, int> &list, const unsigned int number, const unsigned int startNr)
 {
     for (unsigned int nr = startNr; nr < number + startNr; nr++)
     {
@@ -10,7 +10,7 @@ void SinglyLikedListFixture::insertNodes(SinglyLinkedList<std::string, int> &lis
     }
 }
 
-SinglyLinkedList<std::string, int> SinglyLikedListFixture::createEmptyList()
+SinglyLinkedList<std::string, int> SinglyLinkedListFixture::createEmptyList()
 {
     return {};
 }
