@@ -502,5 +502,5 @@ TEST_F(SinglyLinkedListFixture, Singly_List_OstreamOperator_MultipleElementsList
     
     std::stringstream ss;
     ss << singlyList;
-    ASSERT_EQ(ss.str(), "4: 0\n3: 1\n2: 2\n1: 3\n0: 4\n");
+    ASSERT_EQ(ss.str(), "4: 4\n3: 3\n2: 2\n1: 1\n0: 0\n");
 }

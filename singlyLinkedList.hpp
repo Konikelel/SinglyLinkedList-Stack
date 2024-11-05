@@ -299,7 +299,7 @@ std::ostream& operator<<(std::ostream& os, const SinglyLinkedList<Key, Info>& li
 {
     for (typename SinglyLinkedList<Key, Info>::Node *pCurr = list.head; pCurr != nullptr; pCurr = pCurr->next)
     {
-        os << pCurr->key << " " << pCurr->info << std::endl;
+        os << pCurr->key << ": " << pCurr->info << std::endl;
     }
     return os;  
 }
