@@ -76,14 +76,14 @@ TEST_F(SinglyLinkedListFixture, Singly_List_GetPosition_NotExists)
 }
 
 
-// GET
-TEST_F(SinglyLinkedListFixture, Singly_List_Get_Empty)
+// GET, Bool overload
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_BoolOverload_Empty)
 {
     int temp;
     ASSERT_FALSE(singlyList.get("1", temp));
 }
 
-TEST_F(SinglyLinkedListFixture, Singly_List_Get_OneElementList)
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_BoolOverload_OneElementList)
 {
     singlyList.insertFront("1", 1);
     
@@ -92,7 +92,7 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Get_OneElementList)
     ASSERT_EQ(toCheck, 1);
 }
 
-TEST_F(SinglyLinkedListFixture, Singly_List_Get_MultipleElementsList)
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_BoolOverload_MultipleElementsList)
 {
     singlyList.insertFront("0", 0);
     singlyList.insertFront("5", 5);
@@ -107,7 +107,7 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Get_MultipleElementsList)
     ASSERT_EQ(toCheck, 5);
 }
 
-TEST_F(SinglyLinkedListFixture, Singly_List_Get_SpecificOccurance)
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_BoolOverload_SpecificOccurance)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("1", 2);
@@ -117,7 +117,7 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Get_SpecificOccurance)
     ASSERT_EQ(toCheck, 1);
 }
 
-TEST_F(SinglyLinkedListFixture, Singly_List_Get_SpecificOccuranceNotExist)
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_BoolOverload_SpecificOccuranceNotExist)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("1", 2);
@@ -126,8 +126,45 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Get_SpecificOccuranceNotExist)
     ASSERT_FALSE(singlyList.get("1", toCheck, 3));
 }
 
+// GET, Info overload
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_InfoOverload_Empty)
+{
+    EXPECT_THROW(singlyList.get("1"), std::runtime_error);
+}
 
-//GET FIRST
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_InfoOverload_OneElementList)
+{
+    singlyList.insertFront("1", 1);
+    ASSERT_EQ(singlyList.get("1"), 1);
+}
+
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_InfoOverload_MultipleElementsList)
+{
+    singlyList.insertFront("0", 0);
+    singlyList.insertFront("5", 5);
+    
+    ASSERT_EQ(singlyList.get("0"), 0);
+    ASSERT_EQ(singlyList.get("5"), 5);
+    EXPECT_THROW(singlyList.get("10"), std::runtime_error);
+}
+
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_InfoOverload_SpecificOccurance)
+{
+    singlyList.insertFront("1", 1);
+    singlyList.insertFront("1", 2);
+
+    ASSERT_EQ(singlyList.get("1", 2), 1);
+}
+
+TEST_F(SinglyLinkedListFixture, Singly_List_Get_InfoOverload_SpecificOccuranceNotExist)
+{
+    singlyList.insertFront("1", 1);
+    singlyList.insertFront("1", 2);
+    
+    EXPECT_THROW(singlyList.get("1", 3), std::runtime_error);
+}
+
+// GET FIRST, Bool overload
 TEST_F(SinglyLinkedListFixture, Singly_List_GetFirst_Empty)
 {
     int temp;
@@ -150,6 +187,24 @@ TEST_F(SinglyLinkedListFixture, Singly_List_GetFirst_MultipleElementList)
     int toCheck;
     ASSERT_TRUE(singlyList.getFirst(toCheck));
     ASSERT_EQ(toCheck, 3);
+}
+
+// GET FIRST, Info overload
+TEST_F(SinglyLinkedListFixture, Singly_List_GetFirst_InfoOverload_Empty)
+{
+    EXPECT_THROW(singlyList.getFirst(), std::runtime_error);
+}
+
+TEST_F(SinglyLinkedListFixture, Singly_List_GetFirst_InfoOverload_OneElementList)
+{
+    singlyList.insertFront("1", 1);
+    ASSERT_EQ(singlyList.getFirst(), 1);
+}
+
+TEST_F(SinglyLinkedListFixture, Singly_List_GetFirst_InfoOverload_MultipleElementsList)
+{
+    insertNodes(singlyList, 5);
+    ASSERT_EQ(singlyList.getFirst(), 4);
 }
 
 
@@ -247,12 +302,12 @@ TEST_F(SinglyLinkedListFixture, Singly_List_RemoveFront_MultipleElementsList)
 
 
 // REMOVE ALL
-TEST_F(SinglyLinkedListFixture, Singly_List_Remove_Empty)
+TEST_F(SinglyLinkedListFixture, Singly_List_Remove_All_Empty)
 {
     ASSERT_FALSE(singlyList.remove("1", 1));
 }
 
-TEST_F(SinglyLinkedListFixture, Singly_List_Remove_NotEmpty)
+TEST_F(SinglyLinkedListFixture, Singly_List_Remove_All_NotEmpty)
 {
     singlyList.insertFront("1", 1);
     singlyList.insertFront("2", 1);
@@ -260,9 +315,10 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Remove_NotEmpty)
     singlyList.insertFront("2", 2);
     singlyList.insertFront("1", 1);
 
-    singlyList.removeAll("1");
+    ASSERT_FALSE(singlyList.removeAll("3"));
+    ASSERT_TRUE(singlyList.removeAll("1"));
     ASSERT_EQ(singlyList.size(), 2);
-    singlyList.removeAll("2");
+    ASSERT_TRUE(singlyList.removeAll("2"));
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
@@ -335,14 +391,14 @@ TEST_F(SinglyLinkedListFixture, Singly_List_IsEmpty_NotEmpty)
 // CLEAR
 TEST_F(SinglyLinkedListFixture, Singly_List_Clear_Empty)
 {
-    singlyList.clear();
+    ASSERT_FALSE(singlyList.clear());
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
 TEST_F(SinglyLinkedListFixture, Singly_List_Clear_NotEmpty)
 {
     singlyList.insertFront("1", 1);
-    singlyList.clear();
+    ASSERT_TRUE(singlyList.clear());
     ASSERT_TRUE(singlyList.isEmpty());
 }
 

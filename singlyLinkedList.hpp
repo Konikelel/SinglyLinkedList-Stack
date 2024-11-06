@@ -12,16 +12,18 @@ public:
     
     bool exist(const Key& key, unsigned int occ = 1) const;
     int getPosition(const Key& key, unsigned int occ = 1) const;
+    Info& get(const Key& key, unsigned int occ = 1) const;
     bool get(const Key& key, Info& result, unsigned int occ = 1) const;
+    Info& getFirst() const;
     bool getFirst(Info& result) const;
     bool insertFront(const Key& key, const Info& info);
     bool insertAfter(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
     bool removeFront();
-    void removeAll(const Key& key);
+    unsigned int removeAll(const Key& key);
     bool remove(const Key& key, unsigned int occ = 1);
     [[nodiscard]] unsigned int size() const;
     [[nodiscard]] bool isEmpty() const;
-    void clear();
+    bool clear();
     void extend(const SinglyLinkedList& other);
     
     SinglyLinkedList& operator=(const SinglyLinkedList& other);
@@ -93,6 +95,17 @@ int SinglyLinkedList<Key, Info>::getPosition(const Key& key, unsigned int occ) c
 }
 
 template <typename Key, typename Info>
+Info& SinglyLinkedList<Key, Info>::get(const Key& key, const unsigned int occ) const
+{
+    Node *pNode = this->getNode(key, occ);
+    if (pNode == nullptr)
+    {
+        throw std::runtime_error("Couldn't get the Node");
+    }
+    return pNode->info;
+}
+
+template <typename Key, typename Info>
 bool SinglyLinkedList<Key, Info>::get(const Key& key, Info& result, const unsigned int occ) const
 {
     Node *pNode = this->getNode(key, occ);
@@ -102,6 +115,16 @@ bool SinglyLinkedList<Key, Info>::get(const Key& key, Info& result, const unsign
     }
     result = pNode->info;
     return true;
+}
+
+template <typename Key, typename Info>
+Info& SinglyLinkedList<Key, Info>::getFirst() const
+{
+    if (this->isEmpty())
+    {
+        throw std::runtime_error("Couldn't get first Node");
+    }
+    return this->head->info;
 }
 
 template <typename Key, typename Info>
@@ -139,17 +162,21 @@ bool SinglyLinkedList<Key, Info>::removeFront()
 }
 
 template <typename Key, typename Info>
-void SinglyLinkedList<Key, Info>::removeAll(const Key& key)
+unsigned int SinglyLinkedList<Key, Info>::removeAll(const Key& key)
 {
+    unsigned int delItemNr = 0;
     for(Node *pPrev = nullptr, *pCurr = this->head; pCurr != nullptr; pCurr = pPrev == nullptr ? this->head : pPrev->next)
     {
         if (pCurr->key == key)
         {
             this->removeNode(pPrev == nullptr ? this->head : pPrev->next);
+            delItemNr++;
             continue;
         }
         pPrev = pCurr;
     }
+
+    return delItemNr;
 }
 
 template <typename Key, typename Info>
@@ -178,14 +205,19 @@ template <typename Key, typename Info>
 }
 
 template <typename Key, typename Info>
-void SinglyLinkedList<Key, Info>::clear()
+bool SinglyLinkedList<Key, Info>::clear()
 {
+    if (this->isEmpty())
+    {
+        return false;
+    }
     for (Node *pCurr; (pCurr = this->head) != nullptr;)
     {
         this->head = this->head->next;
         delete pCurr;
     }
     this->count = 0;
+    return true;
 }
 
 template <typename Key, typename Info>
@@ -195,6 +227,9 @@ void SinglyLinkedList<Key, Info>::extend(const SinglyLinkedList& other)
     {
         return;
     }
+    // auto cpy(other);
+    // last->next = cpy.head;
+    // cpy.head = nullptr;
     
     Node *pThisCurr = this->head, *pOtherCurr = other.head;
     if (this->isEmpty())
@@ -253,16 +288,9 @@ bool SinglyLinkedList<Key, Info>::removeNode(Node*& pTarget)
 template <typename Key, typename Info>
 bool SinglyLinkedList<Key, Info>::insertNode(Node*& pTarget, const Key& key, const Info& info)
 {
-    try
-    {
-        pTarget = new Node{key, info, pTarget};
-        ++this->count;
-        return true;
-    }
-    catch (std::bad_alloc&)
-    {
-        throw std::runtime_error("Couldn't allocate memory for the Node");
-    }
+    pTarget = new Node{key, info, pTarget};
+    ++this->count;
+    return true;
 }
 
 
