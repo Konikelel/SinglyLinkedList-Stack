@@ -208,6 +208,27 @@ TEST_F(SinglyLinkedListFixture, Singly_List_GetFirst_InfoOverload_MultipleElemen
 }
 
 
+// POP FIRST
+TEST_F(SinglyLinkedListFixture, Singly_List_PopFirst_Empty)
+{
+    EXPECT_THROW(singlyList.popFirst(), std::runtime_error);
+}
+
+TEST_F(SinglyLinkedListFixture, Singly_List_PopFirst_OneElementList)
+{
+    singlyList.pushFront("1", 1);
+    ASSERT_EQ(singlyList.popFirst(), 1);
+    ASSERT_TRUE(singlyList.isEmpty());
+}
+
+TEST_F(SinglyLinkedListFixture, Singly_List_PopFirst_MultipleElementsList)
+{
+    insertNodes(singlyList, 5);
+    ASSERT_EQ(singlyList.popFirst(), 4);
+    ASSERT_EQ(singlyList.size(), 4);
+}
+
+
 // PUSH FRONT
 TEST_F(SinglyLinkedListFixture, Singly_List_PushFront_Empty)
 {

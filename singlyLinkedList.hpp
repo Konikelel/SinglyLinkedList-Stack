@@ -16,6 +16,7 @@ public:
     bool get(const Key& key, Info& result, unsigned int occ = 1) const;
     Info& getFirst() const;
     bool getFirst(Info& result) const;
+    Info popFirst();
     bool pushFront(const Key& key, const Info& info);
     bool pushAfter(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
     bool removeFront();
@@ -125,6 +126,14 @@ Info& SinglyLinkedList<Key, Info>::getFirst() const
         throw std::runtime_error("Couldn't get first Node");
     }
     return this->head->info;
+}
+
+template <typename Key, typename Info>
+Info SinglyLinkedList<Key, Info>::popFirst()
+{
+    Info result = this->getFirst();
+    this->removeNode(this->head);
+    return result;
 }
 
 template <typename Key, typename Info>
