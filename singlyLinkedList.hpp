@@ -17,6 +17,7 @@ public:
     Info& getFirst() const;
     bool getFirst(Info& result) const;
     Info popFirst();
+    bool popFirst(Info& result);
     bool pushFront(const Key& key, const Info& info);
     bool pushAfter(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
     bool removeFront();
@@ -134,6 +135,12 @@ Info SinglyLinkedList<Key, Info>::popFirst()
     Info result = this->getFirst();
     this->removeNode(this->head);
     return result;
+}
+
+template <typename Key, typename Info>
+bool SinglyLinkedList<Key, Info>::popFirst(Info& result)
+{
+    return this->getFirst(result) && this->removeNode(this->head);
 }
 
 template <typename Key, typename Info>
