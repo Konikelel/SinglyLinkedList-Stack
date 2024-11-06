@@ -16,19 +16,19 @@ void concatenate(SinglyLinkedList <Key, Info>& seq1, SinglyLinkedList <Key, Info
     auto seqBuffer = SinglyLinkedList<Key, Info>();
     for(unsigned int nr = 0; nr < len1 and !seq1.isEmpty(); nr++)
     {
-        seqBuffer.insertFront(seq1.head->key, seq1.head->info);
+        seqBuffer.pushFront(seq1.head->key, seq1.head->info);
         seq1.removeFront();
     }
     for(unsigned int nr = 0; nr < len2 and !seq2.isEmpty(); nr++)
     {
-        seqBuffer.insertFront(seq2.head->key, seq2.head->info);
+        seqBuffer.pushFront(seq2.head->key, seq2.head->info);
         seq2.removeFront();
     }
     
     concatenate(seq1, seq2, len1, len2, seq);
     while(!seqBuffer.isEmpty())
     {
-        seq.insertFront(seqBuffer.head->key, seqBuffer.head->info);
+        seq.pushFront(seqBuffer.head->key, seqBuffer.head->info);
         seqBuffer.removeFront();
     }
 }

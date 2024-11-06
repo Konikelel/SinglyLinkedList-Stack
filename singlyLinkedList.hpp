@@ -16,15 +16,15 @@ public:
     bool get(const Key& key, Info& result, unsigned int occ = 1) const;
     Info& getFirst() const;
     bool getFirst(Info& result) const;
-    bool insertFront(const Key& key, const Info& info);
-    bool insertAfter(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
+    bool pushFront(const Key& key, const Info& info);
+    bool pushAfter(const Key& key, const Info& info, const Key& where, unsigned int occ = 1);
     bool removeFront();
     unsigned int removeAll(const Key& key);
     bool remove(const Key& key, unsigned int occ = 1);
     [[nodiscard]] unsigned int size() const;
     [[nodiscard]] bool isEmpty() const;
     bool clear();
-    void extend(const SinglyLinkedList& other);
+    void append(const SinglyLinkedList& other);
     
     SinglyLinkedList& operator=(const SinglyLinkedList& other);
     SinglyLinkedList operator+(const SinglyLinkedList& other);
@@ -64,7 +64,7 @@ private:
 template <typename Key, typename Info>
 SinglyLinkedList<Key, Info>::SinglyLinkedList(const SinglyLinkedList& src): SinglyLinkedList()
 {
-    this->extend(src);
+    this->append(src);
 }
 
 template <typename Key, typename Info>
@@ -139,13 +139,13 @@ bool SinglyLinkedList<Key, Info>::getFirst(Info& result) const
 }
 
 template <typename Key, typename Info>
-bool SinglyLinkedList<Key, Info>::insertFront(const Key& key, const Info& info)
+bool SinglyLinkedList<Key, Info>::pushFront(const Key& key, const Info& info)
 {
     return this->insertNode(this->head, key, info);
 }
 
 template <typename Key, typename Info>
-bool SinglyLinkedList<Key, Info>::insertAfter(const Key& key, const Info& info, const Key& where, const unsigned int occ)
+bool SinglyLinkedList<Key, Info>::pushAfter(const Key& key, const Info& info, const Key& where, const unsigned int occ)
 {
     Node *pPrev = this->getNode(where, occ);
     if (pPrev == nullptr)
@@ -223,7 +223,7 @@ bool SinglyLinkedList<Key, Info>::clear()
 }
 
 template <typename Key, typename Info>
-void SinglyLinkedList<Key, Info>::extend(const SinglyLinkedList& other)
+void SinglyLinkedList<Key, Info>::append(const SinglyLinkedList& other)
 {
     if (other.isEmpty())
     {
@@ -302,7 +302,7 @@ SinglyLinkedList<Key, Info>& SinglyLinkedList<Key, Info>::operator=(const Singly
     if (this != &other)
     {
         this->clear();
-        this->extend(other);
+        this->append(other);
     }
     return *this;
 }
@@ -311,7 +311,7 @@ template <typename Key, typename Info>
 SinglyLinkedList<Key, Info> SinglyLinkedList<Key, Info>::operator+(const SinglyLinkedList& other)
 {
     auto out = SinglyLinkedList(*this);
-    out.extend(other);
+    out.append(other);
     return out;
 }
 
@@ -319,7 +319,7 @@ template <typename Key, typename Info>
 SinglyLinkedList<Key, Info>& SinglyLinkedList<Key, Info>::operator+=(const SinglyLinkedList& other)
 {
     if (this != &other) {
-        this->extend(other);
+        this->append(other);
     }
     return *this;
 }

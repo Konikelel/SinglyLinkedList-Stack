@@ -21,7 +21,7 @@ private:
 template <typename Key, typename Info>
 void Stack<Key, Info>::push(const Key& key, const Info& info)
 {
-    list.insertFront(key, info);
+    list.pushFront(key, info);
 }
 
 template <typename Key, typename Info>

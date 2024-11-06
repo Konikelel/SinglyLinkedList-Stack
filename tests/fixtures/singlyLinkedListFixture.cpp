@@ -6,7 +6,7 @@ void SinglyLinkedListFixture::insertNodes(SinglyLinkedList<std::string, int> &li
 {
     for (unsigned int nr = startNr; nr < number + startNr; nr++)
     {
-        list.insertFront(std::to_string(nr), static_cast<int>(nr));
+        list.pushFront(std::to_string(nr), static_cast<int>(nr));
     }
 }
 
