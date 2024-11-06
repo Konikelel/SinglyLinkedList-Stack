@@ -169,8 +169,10 @@ unsigned int SinglyLinkedList<Key, Info>::removeAll(const Key& key)
     {
         if (pCurr->key == key)
         {
-            this->removeNode(pPrev == nullptr ? this->head : pPrev->next);
-            delItemNr++;
+            if(this->removeNode(pPrev == nullptr ? this->head : pPrev->next))
+            {
+                delItemNr++;
+            }
             continue;
         }
         pPrev = pCurr;
