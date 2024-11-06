@@ -452,10 +452,18 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Clear_NotEmpty)
 
 
 // APPEND
+TEST_F(SinglyLinkedListFixture, Singly_List_Append_Self)
+{
+    insertNodes(singlyList, 5);
+    ASSERT_TRUE(singlyList.append(singlyList));
+    ASSERT_EQ(singlyList.size(), 5 * 2);
+}
+
+
 TEST_F(SinglyLinkedListFixture, Singly_List_Append_EmptyListWithEmptyList)
 {
     const auto toExtend = createEmptyList();
-    singlyList.append(toExtend);
+    ASSERT_FALSE(singlyList.append(toExtend));
     ASSERT_TRUE(singlyList.isEmpty());
 }
 
@@ -465,7 +473,7 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Append_EmptyListWithNoEmptyList)
     insertNodes(toExtend, 5);
 
     ASSERT_TRUE(singlyList.isEmpty());
-    singlyList.append(toExtend);
+    ASSERT_TRUE(singlyList.append(toExtend));
     ASSERT_EQ(singlyList.size(), toExtend.size());
     
     int toCheckOne, toCheckTwo;
@@ -478,7 +486,7 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Append_NotEmptyListWithEmptyList)
     insertNodes(singlyList, 5);
     const auto toExtend = createEmptyList();
 
-    singlyList.append(toExtend);
+    ASSERT_FALSE(singlyList.append(toExtend));
     ASSERT_EQ(singlyList.size(), 5);
 }
 
@@ -488,7 +496,7 @@ TEST_F(SinglyLinkedListFixture, Singly_List_Append_NotEmptyListWithNotEmptyList)
     auto toExtend = createEmptyList();
     insertNodes(toExtend, 4);
 
-    singlyList.append(toExtend);
+    ASSERT_TRUE(singlyList.append(toExtend));
     ASSERT_EQ(singlyList.size(), 9);
 }
 

@@ -26,7 +26,7 @@ public:
     [[nodiscard]] unsigned int size() const;
     [[nodiscard]] bool isEmpty() const;
     bool clear();
-    void append(const SinglyLinkedList& other);
+    bool append(const SinglyLinkedList& other);
     
     SinglyLinkedList& operator=(const SinglyLinkedList& other);
     SinglyLinkedList operator+(const SinglyLinkedList& other);
@@ -239,21 +239,20 @@ bool SinglyLinkedList<Key, Info>::clear()
 }
 
 template <typename Key, typename Info>
-void SinglyLinkedList<Key, Info>::append(const SinglyLinkedList& other)
+bool SinglyLinkedList<Key, Info>::append(const SinglyLinkedList& other)
 {
     if (other.isEmpty())
     {
-        return;
+        return false;
     }
-    // auto cpy(other);
-    // last->next = cpy.head;
-    // cpy.head = nullptr;
-    
+
+    unsigned int newNodesNr = other.size();
     Node *pThisCurr = this->head, *pOtherCurr = other.head;
     if (this->isEmpty())
     {
         this->insertNode(this->head, pOtherCurr->key, pOtherCurr->info);
         pOtherCurr = pOtherCurr->next, pThisCurr = this->head;
+        --newNodesNr;
     }
     else
     {
@@ -262,10 +261,11 @@ void SinglyLinkedList<Key, Info>::append(const SinglyLinkedList& other)
             pThisCurr = pThisCurr->next;
         }
     }
-    for (;pOtherCurr != nullptr; pOtherCurr = pOtherCurr->next, pThisCurr = pThisCurr->next)
+    for (; newNodesNr > 0; pOtherCurr = pOtherCurr->next, pThisCurr = pThisCurr->next, --newNodesNr)
     {
         this->insertNode(pThisCurr->next, pOtherCurr->key, pOtherCurr->info);
     }
+    return true;
 }
 
 template <typename Key, typename Info>
