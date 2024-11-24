@@ -12,9 +12,9 @@ public:
     
     bool exist(const Key& key, unsigned int occ = 1) const;
     int getPosition(const Key& key, unsigned int occ = 1) const;
-    Info& get(const Key& key, unsigned int occ = 1) const;
+    const Info& get(const Key& key, unsigned int occ = 1) const;
     bool get(const Key& key, Info& result, unsigned int occ = 1) const;
-    Info& getFirst() const;
+    const Info& getFirst() const;
     bool getFirst(Info& result) const;
     Info popFirst();
     bool popFirst(Info& result);
@@ -97,7 +97,7 @@ int SinglyLinkedList<Key, Info>::getPosition(const Key& key, unsigned int occ) c
 }
 
 template <typename Key, typename Info>
-Info& SinglyLinkedList<Key, Info>::get(const Key& key, const unsigned int occ) const
+const Info& SinglyLinkedList<Key, Info>::get(const Key& key, const unsigned int occ) const
 {
     Node *pNode = this->getNode(key, occ);
     if (pNode == nullptr)
@@ -120,7 +120,7 @@ bool SinglyLinkedList<Key, Info>::get(const Key& key, Info& result, const unsign
 }
 
 template <typename Key, typename Info>
-Info& SinglyLinkedList<Key, Info>::getFirst() const
+const Info& SinglyLinkedList<Key, Info>::getFirst() const
 {
     if (this->isEmpty())
     {
