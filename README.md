@@ -41,4 +41,4 @@ The `Stack` class will provide a clear interface for managing its elements while
 
 In addition to the core data structure implementations, the project will include external function template that offer advanced operations on `SinglyLinkedList` instances:
 
-1. **Concatenate**: A function that merges two singly linked lists, allowing elements from both lists to interleave while clearing the original lists.
+**Concatenate**: A function that merges two singly linked lists, allowing elements from both lists to interleave while clearing the original lists.
