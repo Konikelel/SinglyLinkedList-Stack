@@ -1,98 +1,44 @@
-# Algorithm and Data Structure Task #1
+# Project Description: Implementation of `SinglyLinkedList` and `Stack` Data Structures
 
-## Part 1 - Design a `SinglyLinkedList` class
+This project focuses on the design and implementation of a class called `SinglyLinkedList`, which represents a collection of elements arranged in a singly linked structure. Additionally, the project includes the design of a `Stack` class that utilizes the `SinglyLinkedList` for its internal storage, further enhancing the usability of both data structures.
 
-Design a class `SinglyLinkedList` to represent collection  - singly linked list. Write unit tests for the designed class, at least one test per method.
+## Designing the `SinglyLinkedList` Class
 
-Please consider what operations can be implemented (it makes sense to implement, is efficient)
-for a singly linked list. In particular, whether it is possible to efficiently
-implement deletion from the beginning and end of the list.
+In the first part of this project, the primary objective is to create a robust class named `SinglyLinkedList`, which acts as a singly linked list. The class is expected to include:
 
-```c++
-template <typename Key, typename Info>
-class SinglyLinkedList
-{
-public:
-    SinglyLinkedList();
+* **Node Structure**: Internally define a `Node` structure that holds key-value pairs (Key and Info) along with a pointer to the next node.
 
-    SinglyLinkedList(const SinglyLinkedList& src)
-    {
-        // initialize properly data members
-        // probably as in default constructor
-        *this = src;
-    }
+* **Member Functions**: Implement various member functions that allow for dynamic interaction with the linked list, including:
+  
+  * **Constructors and Destructors**: Properly manage the lifecycle of the list and its nodes.
+  
+  * `push_front()`: To insert a new element at the front of the list.
+  
+  * `pop_front()`: To remove and return the first element from the list.
+  
+  * `size()`: To retrieve the current number of elements in the list.
 
-    ~SinglyLinkedList();
+The design should aim to ensure efficiency and clarity of the `SinglyLinkedList` class, while also laying a solid foundation for the implementation of the `Stack` class.
 
-    SinglyLinkedList& operator=(const SinglyLinkedList& src);
+## Designing the `Stack` Class
 
-    unsigned int size() const;
-    void push_front(const Key& key, const Info& info);
-    // keys are not unique!
-    bool pop_front();
+The second part of the project is focused on creating a `Stack` class that internally uses the `SinglyLinkedList` to store its elements. The `Stack` class will encapsulate stack-specific operations and maintain the integrity of the underlying linked list.
 
-    // and the rest of the interface
-private:
-};
-```
+### Key Features of the `Stack` Class:
+* **Member Functions**: Implement methods that adhere to the Last In, First Out (LIFO) principle:
+  
+  * `push()`: To add an element to the top of the stack.
+  
+  * `pop()`: To remove the top element from the stack.
+  
+  * `peek()`: To return the top element without removing it.
+  
+  * `isEmpty()`: To check if the stack is empty.
 
-## Part 2 – Implement additional function
-Write additional (external) function (not methods) and unit tests for them.
+The `Stack` class will provide a clear interface for managing its elements while abstracting away the complexity of the underlying `SinglyLinkedList`.
 
-```c++
-//Function concatenate two collections by moving the elements from the source collections:
-// seq1 and seq2 to the target collection seq
-template <typename Key, typename Info>
-void concatenate(SinglyLinkedList <Key, Info>& seq1, SinglyLinkedList <Key, Info>& seq2,
-                unsigned int len1, unsignedint len2, SinglyLinkedList <Key, Info>& seq)
-{
-    //…
-}
-```
+## Implementing Additional Function Templates
 
-### Example 1 for concatenate:
-#### Parameters:
-    seq1={0,1,2,3,4,5,6,7,8,9,10,11,12},
-    seq1={20,21,22,23,24,25,26},
-    len1=2, len2=3
+In addition to the core data structure implementations, the project will include external function template that offer advanced operations on `SinglyLinkedList` instances:
 
-#### Result:
-
-    seq={0,1,20,21,22,2,3,23,24,25,4,5,26,6,7,8,9,10,11,12}
-    seq1={}
-    seq2={}
-
-### Example 2 for concatenate:
-#### Parameters:
-    seq1={0,1,2,3,4},
-    seq1={20,21,22},
-    len1=2, len2=0
-#### Result:
-    seq={0,1,2,3,4}
-    seq1={}
-    seq2={}
-
-### Example 3 for concatenate:
-#### Parameters:
-    seq1={0,1,2,3,4},
-    seq1={20,21,22},
-    len1=0, len2=20
-#### Result:
-    seq={20,21,22}
-    seq1={}
-    seq2={}
-
-### Example 4 for concatenate:
-#### Parameters:
-    seq1={0,1,2,3,4},
-    seq1={20,21,22},
-    len1=0, len2=0
-#### Result:
-    seq={}
-    seq1={}
-    seq2={}
-
-
-## Part 3 - Design a `Stack` class
-Design and implement a `Stack` class that internally uses the `SinglyLinkedList` class to store elements.
-The class should provide only stack operations. The internal implementation should be hidden (private). The `Stack` class should not inherit from the `SinglyLinkedList` class.
+1. **Concatenate**: A function that merges two singly linked lists, allowing elements from both lists to interleave while clearing the original lists.
